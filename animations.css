@@ -1,0 +1,324 @@
+/* ============================================
+   AISYTE - Animations
+   animations.css
+   ============================================ */
+
+/* ============================================
+   BLOB ANIMATIONS
+   ============================================ */
+@keyframes blobFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(20px, -30px) scale(1.05); }
+  50% { transform: translate(-15px, 20px) scale(0.95); }
+  75% { transform: translate(25px, 10px) scale(1.02); }
+}
+
+/* ============================================
+   GRADIENT ANIMATIONS
+   ============================================ */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.animated-gradient {
+  background: linear-gradient(-45deg, #6366f1, #8b5cf6, #06b6d4, #f472b6);
+  background-size: 400% 400%;
+  animation: gradientShift 8s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
+   SCROLL REVEAL ANIMATIONS
+   ============================================ */
+
+/* Base hidden state */
+.reveal {
+  opacity: 0;
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Directions */
+.reveal-up     { transform: translateY(40px); }
+.reveal-down   { transform: translateY(-30px); }
+.reveal-left   { transform: translateX(-40px); }
+.reveal-right  { transform: translateX(40px); }
+.reveal-zoom   { transform: scale(0.9); }
+.reveal-fade   { transform: none; }
+
+/* Visible state */
+.reveal.visible {
+  opacity: 1;
+  transform: none !important;
+}
+
+/* Stagger delays */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+.delay-5 { transition-delay: 0.5s; }
+.delay-6 { transition-delay: 0.6s; }
+
+/* ============================================
+   BUTTON RIPPLE EFFECT
+   ============================================ */
+.ripple-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-wave {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(0);
+  animation: rippleExpand 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes rippleExpand {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* ============================================
+   NEON GLOW PULSE
+   ============================================ */
+@keyframes neonPulse {
+  0%, 100% { box-shadow: 0 0 10px var(--accent-glow), 0 0 20px var(--accent-glow); }
+  50% { box-shadow: 0 0 20px var(--accent-glow), 0 0 60px var(--accent-glow), 0 0 80px var(--accent-glow); }
+}
+
+.neon-pulse {
+  animation: neonPulse 3s ease-in-out infinite;
+}
+
+/* ============================================
+   FLOAT ANIMATION (misc elements)
+   ============================================ */
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.float-anim {
+  animation: floatY 4s ease-in-out infinite;
+}
+
+/* ============================================
+   SPIN / ROTATE
+   ============================================ */
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spinReverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+/* ============================================
+   COUNTER ANIMATION HELPER
+   ============================================ */
+.counter-animated {
+  display: inline-block;
+}
+
+/* ============================================
+   SHIMMER SKELETON
+   ============================================ */
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--border-color) 25%,
+    rgba(255,255,255,0.06) 50%,
+    var(--border-color) 75%
+  );
+  background-size: 400px 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ============================================
+   PAGE TRANSITION
+   ============================================ */
+.page-enter {
+  animation: pageIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   CARD 3D TILT (via JS)
+   ============================================ */
+.tilt-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 0.1s ease;
+}
+
+.tilt-card-inner {
+  transform: translateZ(0);
+  transition: transform 0.1s ease;
+}
+
+/* ============================================
+   TYPEWRITER CURSOR
+   ============================================ */
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ============================================
+   HERO SECTION ENTRANCE
+   ============================================ */
+.hero-text > * {
+  animation: heroFadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.hero-text > *:nth-child(1) { animation-delay: 0.2s; }
+.hero-text > *:nth-child(2) { animation-delay: 0.35s; }
+.hero-text > *:nth-child(3) { animation-delay: 0.5s; }
+.hero-text > *:nth-child(4) { animation-delay: 0.65s; }
+.hero-text > *:nth-child(5) { animation-delay: 0.8s; }
+
+.hero-visual {
+  animation: heroFadeRight 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
+}
+
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heroFadeRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ============================================
+   INFINITE SCROLL MARQUEE (for logos/testimonials)
+   ============================================ */
+.marquee-wrap {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 2rem;
+  animation: marqueeScroll 25s linear infinite;
+  width: max-content;
+}
+
+.marquee-track:hover { animation-play-state: paused; }
+
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ============================================
+   ACTIVE LINK INDICATOR
+   ============================================ */
+.nav-links a.active {
+  color: var(--text-primary);
+  position: relative;
+}
+
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+/* ============================================
+   SCROLL INDICATOR (hero bottom)
+   ============================================ */
+.scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: fadeInUp 1s 1.5s both;
+}
+
+.scroll-indicator span {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.scroll-mouse {
+  width: 22px;
+  height: 34px;
+  border: 2px solid var(--border-color);
+  border-radius: 11px;
+  position: relative;
+}
+
+.scroll-mouse::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 7px;
+  background: var(--accent);
+  border-radius: 2px;
+  animation: scrollDot 1.5s ease-in-out infinite;
+}
+
+@keyframes scrollDot {
+  0% { transform: translateX(-50%) translateY(0); opacity: 1; }
+  100% { transform: translateX(-50%) translateY(12px); opacity: 0; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  to { opacity: 0.7; transform: translateX(-50%) translateY(0); }
+}
+
+/* ============================================
+   PARTICLE DOTS CSS (fallback)
+   ============================================ */
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.4;
+  animation: particleFloat linear infinite;
+}
+
+@keyframes particleFloat {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.4; }
+  90% { opacity: 0.4; }
+  100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+}

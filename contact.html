@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Contact AISyte — Get in touch with our team for support, sales, or partnerships." />
+  <title>Contact — AISyte</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+  <style>
+    /* ── Page Hero ── */
+    .page-hero {
+      padding: calc(var(--navbar-height) + 80px) 0 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .page-hero-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.18;
+    }
+
+    .page-hero-blob-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, #6366f1, transparent 70%);
+      top: -120px; left: -80px;
+    }
+
+    .page-hero-blob-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, #06b6d4, transparent 70%);
+      bottom: -60px; right: -60px;
+    }
+
+    .page-hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Contact Grid ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    /* ── Info Cards ── */
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .info-card {
+      padding: 1.5rem;
+      border-radius: var(--radius-lg);
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      display: flex;
+      gap: 1.125rem;
+      align-items: flex-start;
+      transition: all var(--transition-med);
+    }
+
+    .info-card:hover {
+      border-color: var(--border-hover);
+      transform: translateX(6px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .info-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .info-icon.blue   { background: linear-gradient(135deg, rgba(99,102,241,.2), rgba(99,102,241,.05)); }
+    .info-icon.cyan   { background: linear-gradient(135deg, rgba(6,182,212,.2),  rgba(6,182,212,.05)); }
+    .info-icon.pink   { background: linear-gradient(135deg, rgba(244,114,182,.2),rgba(244,114,182,.05)); }
+    .info-icon.green  { background: linear-gradient(135deg, rgba(34,197,94,.2),  rgba(34,197,94,.05)); }
+
+    .info-card h4 {
+      font-family: var(--font-display);
+      font-size: .9375rem;
+      font-weight: 700;
+      margin-bottom: .25rem;
+      letter-spacing: -.01em;
+    }
+
+    .info-card p {
+      font-size: .85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .info-card a {
+      color: var(--accent-light);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+
+    .info-card a:hover { color: var(--accent2); }
+
+    /* Social strip */
+    .contact-socials {
+      padding: 1.5rem;
+      border-radius: var(--radius-lg);
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+    }
+
+    .contact-socials h4 {
+      font-family: var(--font-display);
+      font-size: .875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .contact-socials .social-links { flex-wrap: wrap; }
+
+    /* ── Contact Form ── */
+    .contact-form-card {
+      padding: 2.5rem;
+      border-radius: var(--radius-xl);
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(16px);
+    }
+
+    .contact-form-card h2 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      margin-bottom: .5rem;
+    }
+
+    .contact-form-card > p {
+      color: var(--text-secondary);
+      font-size: .9rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .form-field label {
+      font-size: .8125rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      letter-spacing: .01em;
+    }
+
+    .form-field label span { color: var(--accent3); margin-left: 2px; }
+
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+      padding: .75rem 1rem;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border-color);
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      font-size: .9rem;
+      font-family: var(--font-body);
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+      width: 100%;
+    }
+
+    .form-field input:focus,
+    .form-field textarea:focus,
+    .form-field select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .form-field input::placeholder,
+    .form-field textarea::placeholder { color: var(--text-muted); }
+
+    .form-field textarea { resize: vertical; min-height: 130px; }
+
+    .form-field select option { background: var(--bg-secondary); }
+
+    .form-err {
+      font-size: .775rem;
+      color: #f472b6;
+      font-weight: 600;
+      min-height: 1rem;
+    }
+
+    .submit-btn {
+      width: 100%;
+      justify-content: center;
+      padding: .9375rem;
+      font-size: .9375rem;
+    }
+
+    /* ── Map Section ── */
+    .map-section {
+      padding: 80px 0;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .map-card {
+      border-radius: var(--radius-xl);
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .office-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .office-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .office-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: .45rem;
+      flex-shrink: 0;
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .office-item h5 {
+      font-family: var(--font-display);
+      font-size: .9375rem;
+      font-weight: 700;
+      margin-bottom: .2rem;
+    }
+
+    .office-item p {
+      font-size: .85rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Fake map visual */
+    .map-visual {
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+      height: 280px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    [data-theme="light"] .map-visual {
+      background: linear-gradient(135deg, #e2e8f0 0%, #f1f5f9 50%, #e2e8f0 100%);
+    }
+
+    .map-grid-line {
+      position: absolute;
+      background: rgba(99,102,241,.08);
+    }
+
+    .map-grid-line.h { width: 100%; height: 1px; }
+    .map-grid-line.v { height: 100%; width: 1px; }
+
+    .map-pin {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .map-pin .pin-dot {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid #fff;
+      box-shadow: 0 0 16px var(--accent-glow);
+      animation: pinPulse 2s ease-in-out infinite;
+    }
+
+    .map-pin .pin-label {
+      font-size: .65rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      background: var(--bg-card);
+      padding: .2rem .5rem;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+      white-space: nowrap;
+    }
+
+    @keyframes pinPulse {
+      0%,100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+      50% { box-shadow: 0 0 0 8px rgba(99,102,241,0); }
+    }
+
+    /* ── FAQ mini section ── */
+    .contact-faq {
+      padding: 80px 0;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .contact-grid  { grid-template-columns: 1fr; }
+      .map-card      { grid-template-columns: 1fr; }
+      .form-row      { grid-template-columns: 1fr; }
+      .contact-form-card { padding: 1.75rem; }
+    }
+
+    @media (max-width: 640px) {
+      .contact-form-card { padding: 1.25rem; }
+      .map-card { padding: 1.5rem; gap: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div id="scroll-progress"></div>
+
+<!-- Loader -->
+<div id="loader" aria-hidden="true">
+  <div class="loader-logo">AISyte</div>
+  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+</div>
+
+<!-- Cursor -->
+<div id="cursor-dot" aria-hidden="true"></div>
+<div id="cursor-ring" aria-hidden="true"></div>
+
+<!-- Notification -->
+<div id="notification" role="status" aria-live="polite">
+  <div class="notif-icon">✓</div><span></span>
+</div>
+
+<!-- ============================
+  NAVBAR
+============================= -->
+<nav id="navbar" role="navigation" aria-label="Main navigation">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">AISyte</a>
+    <ul class="nav-links">
+      <li><a href="index.html#features">Features</a></li>
+      <li><a href="index.html#ai-demo">Demo</a></li>
+      <li><a href="index.html#templates">Templates</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button id="theme-toggle" aria-label="Toggle theme">☀️</button>
+      <a href="dashboard.html" class="btn btn-ghost">Sign in</a>
+      <a href="pricing.html" class="btn btn-primary">Get Started</a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div id="mobile-nav" class="mobile-nav" aria-hidden="true">
+  <ul>
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="index.html#ai-demo">Demo</a></li>
+    <li><a href="index.html#templates">Templates</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="mobile-nav-actions">
+    <a href="dashboard.html" class="btn btn-ghost" style="width:100%;justify-content:center;">Sign in</a>
+    <a href="pricing.html" class="btn btn-primary" style="width:100%;justify-content:center;">Get Started Free</a>
+    <button id="theme-toggle-mobile" style="background:var(--bg-card);border:1px solid var(--border-color);color:var(--text-secondary);padding:.625rem;border-radius:var(--radius-md);cursor:pointer;font-size:1rem;display:flex;align-items:center;gap:.5rem;width:100%;justify-content:center;font-family:var(--font-body);">🌙 Toggle Theme</button>
+  </div>
+</div>
+
+<!-- ============================
+  PAGE HERO
+============================= -->
+<div class="page-hero">
+  <div class="page-hero-bg">
+    <div class="page-hero-blob page-hero-blob-1"></div>
+    <div class="page-hero-blob page-hero-blob-2"></div>
+  </div>
+  <div class="page-hero-content container">
+    <div class="section-badge reveal reveal-up" style="margin:0 auto 1.25rem;">✦ Contact Us</div>
+    <h1 class="section-title reveal reveal-up delay-1" style="font-size:clamp(2.25rem,5vw,3.5rem);margin-bottom:1rem;">
+      Let's Start a <span>Conversation</span>
+    </h1>
+    <p class="section-sub reveal reveal-up delay-2" style="margin:0 auto;">
+      Whether you have a question, need support, or want to explore a partnership — we're here and happy to help.
+    </p>
+  </div>
+</div>
+
+<!-- ============================
+  MAIN CONTACT SECTION
+============================= -->
+<section style="padding:0 0 var(--section-padding);">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- LEFT: Info -->
+      <div class="contact-info">
+        <div class="info-card reveal reveal-left delay-1">
+          <div class="info-icon blue">📧</div>
+          <div>
+            <h4>Email Us</h4>
+            <p>For general inquiries and support.<br />
+              <a href="mailto:hello@aisyte.ai">hello@aisyte.ai</a><br />
+              <a href="mailto:support@aisyte.ai">support@aisyte.ai</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="info-card reveal reveal-left delay-2">
+          <div class="info-icon cyan">💬</div>
+          <div>
+            <h4>Live Chat</h4>
+            <p>Chat with our AI assistant 24/7, or connect with a human agent Mon–Fri 9AM–6PM UTC.</p>
+          </div>
+        </div>
+
+        <div class="info-card reveal reveal-left delay-3">
+          <div class="info-icon pink">🤝</div>
+          <div>
+            <h4>Sales &amp; Partnerships</h4>
+            <p>Interested in Enterprise or white-label deals?<br />
+              <a href="mailto:sales@aisyte.ai">sales@aisyte.ai</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="info-card reveal reveal-left delay-4">
+          <div class="info-icon green">⚡</div>
+          <div>
+            <h4>Response Time</h4>
+            <p>We typically respond within <strong style="color:var(--text-primary);">2 hours</strong> on business days. Urgent support tickets are handled in under 30 minutes for Pro &amp; Business users.</p>
+          </div>
+        </div>
+
+        <div class="contact-socials reveal reveal-left delay-4">
+          <h4>Find Us Online</h4>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="Twitter / X">𝕏</a>
+            <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+            <a href="#" class="social-link" aria-label="GitHub">⌥</a>
+            <a href="#" class="social-link" aria-label="YouTube">▶</a>
+            <a href="#" class="social-link" aria-label="Discord">◈</a>
+            <a href="#" class="social-link" aria-label="Instagram">◉</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Form -->
+      <div class="contact-form-card reveal reveal-right delay-1">
+        <h2>Send Us a Message</h2>
+        <p>Fill in the form below and we'll get back to you as soon as possible.</p>
+
+        <form id="contact-form" novalidate>
+          <!-- Name + Email -->
+          <div class="form-row">
+            <div class="form-field">
+              <label for="c-name">Full Name <span>*</span></label>
+              <input type="text" id="c-name" name="name" placeholder="John Doe" autocomplete="name" />
+              <span class="form-err" id="c-name-err"></span>
+            </div>
+            <div class="form-field">
+              <label for="c-email">Email Address <span>*</span></label>
+              <input type="email" id="c-email" name="email" placeholder="john@example.com" autocomplete="email" />
+              <span class="form-err" id="c-email-err"></span>
+            </div>
+          </div>
+
+          <!-- Company + Topic -->
+          <div class="form-row">
+            <div class="form-field">
+              <label for="c-company">Company / Website</label>
+              <input type="text" id="c-company" name="company" placeholder="Optional" />
+            </div>
+            <div class="form-field">
+              <label for="c-topic">Topic <span>*</span></label>
+              <select id="c-topic" name="topic">
+                <option value="" disabled selected>Select a topic…</option>
+                <option value="general">General Inquiry</option>
+                <option value="support">Technical Support</option>
+                <option value="billing">Billing &amp; Plans</option>
+                <option value="sales">Sales &amp; Enterprise</option>
+                <option value="partnership">Partnership</option>
+                <option value="press">Press &amp; Media</option>
+                <option value="other">Other</option>
+              </select>
+              <span class="form-err" id="c-topic-err"></span>
+            </div>
+          </div>
+
+          <!-- Subject -->
+          <div class="form-field">
+            <label for="c-subject">Subject <span>*</span></label>
+            <input type="text" id="c-subject" name="subject" placeholder="Brief description of your inquiry" />
+            <span class="form-err" id="c-subject-err"></span>
+          </div>
+
+          <!-- Message -->
+          <div class="form-field">
+            <label for="c-message">Message <span>*</span></label>
+            <textarea id="c-message" name="message" placeholder="Tell us more about how we can help you…"></textarea>
+            <span class="form-err" id="c-message-err"></span>
+          </div>
+
+          <!-- Consent -->
+          <div class="form-field" style="flex-direction:row;align-items:flex-start;gap:.75rem;margin-bottom:1.5rem;">
+            <input type="checkbox" id="c-consent" name="consent"
+              style="width:18px;height:18px;margin-top:2px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;" />
+            <label for="c-consent" style="font-size:.8125rem;color:var(--text-secondary);cursor:pointer;line-height:1.5;">
+              I agree to AISyte's <a href="#" style="color:var(--accent-light);text-decoration:none;">Privacy Policy</a>
+              and consent to being contacted about my inquiry.
+            </label>
+          </div>
+          <span class="form-err" id="c-consent-err" style="display:block;margin-top:-.75rem;margin-bottom:1rem;"></span>
+
+          <button type="submit" class="btn btn-primary submit-btn">
+            ✉️ Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================
+  OFFICE / MAP SECTION
+============================= -->
+<section class="map-section">
+  <div class="container">
+    <div class="section-header center" style="margin-bottom:2.5rem;">
+      <div class="section-badge reveal reveal-up">✦ Our Offices</div>
+      <h2 class="section-title reveal reveal-up delay-1">We're <span>Global</span></h2>
+    </div>
+
+    <div class="map-card reveal reveal-up delay-1">
+      <!-- Office list -->
+      <div class="office-list">
+        <div class="office-item">
+          <div class="office-dot"></div>
+          <div>
+            <h5>San Francisco, USA 🇺🇸</h5>
+            <p>HQ — 100 Market St, Suite 1200<br />San Francisco, CA 94105</p>
+          </div>
+        </div>
+        <div class="office-item">
+          <div class="office-dot" style="background:var(--accent2);box-shadow:0 0 10px var(--accent2-glow);"></div>
+          <div>
+            <h5>London, UK 🇬🇧</h5>
+            <p>Europe Office — 22 Bishopsgate<br />London, EC2N 4BQ</p>
+          </div>
+        </div>
+        <div class="office-item">
+          <div class="office-dot" style="background:var(--accent3);box-shadow:0 0 10px rgba(244,114,182,.4);"></div>
+          <div>
+            <h5>Singapore 🇸🇬</h5>
+            <p>APAC Office — 9 Raffles Place<br />Singapore, 048619</p>
+          </div>
+        </div>
+        <div class="office-item">
+          <div class="office-dot" style="background:#22c55e;box-shadow:0 0 10px rgba(34,197,94,.4);"></div>
+          <div>
+            <h5>Remote-First 🌍</h5>
+            <p>Our team spans 28 countries. We believe in async-first, globally distributed work culture.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map visual -->
+      <div class="map-visual">
+        <!-- Grid lines -->
+        <div class="map-grid-line h" style="top:25%;"></div>
+        <div class="map-grid-line h" style="top:50%;"></div>
+        <div class="map-grid-line h" style="top:75%;"></div>
+        <div class="map-grid-line v" style="left:25%;"></div>
+        <div class="map-grid-line v" style="left:50%;"></div>
+        <div class="map-grid-line v" style="left:75%;"></div>
+
+        <!-- Pins -->
+        <div class="map-pin" style="top:40%;left:20%;">
+          <div class="pin-dot" style="background:var(--accent);"></div>
+          <div class="pin-label">San Francisco</div>
+        </div>
+        <div class="map-pin" style="top:30%;left:47%;">
+          <div class="pin-dot" style="background:var(--accent2);"></div>
+          <div class="pin-label">London</div>
+        </div>
+        <div class="map-pin" style="top:52%;left:73%;">
+          <div class="pin-dot" style="background:var(--accent3);"></div>
+          <div class="pin-label">Singapore</div>
+        </div>
+
+        <!-- World text watermark -->
+        <div style="position:absolute;font-size:5.5rem;opacity:.04;font-family:var(--font-display);font-weight:800;letter-spacing:-.05em;user-select:none;">WORLD</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================
+  MINI FAQ
+============================= -->
+<section class="contact-faq">
+  <div class="container-sm">
+    <div class="section-header center" style="margin-bottom:2.5rem;">
+      <div class="section-badge reveal reveal-up">✦ Quick Answers</div>
+      <h2 class="section-title reveal reveal-up delay-1">Common <span>Support Questions</span></h2>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item reveal reveal-up delay-1">
+        <button class="faq-question">
+          How quickly will I get a response?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Starter plan users typically hear back within 24 hours. Pro plan users within 4 hours. Business plan users have a dedicated account manager and get responses within 30 minutes during business hours.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal reveal-up delay-2">
+        <button class="faq-question">
+          Do you offer phone support?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Phone support is available exclusively for Business plan users. All other plans use email and live chat. We find that written support creates better documentation and faster resolution for most issues.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal reveal-up delay-3">
+        <button class="faq-question">
+          Where can I find documentation and tutorials?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Our full documentation, video tutorials, and community forum are available at docs.aisyte.ai. We also have an active Discord community with over 12,000 members where you can get help from fellow builders.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal reveal-up delay-4">
+        <button class="faq-question">
+          How do I report a bug or security issue?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>For bugs, use the in-dashboard bug reporter or email support@aisyte.ai. For security vulnerabilities, please use our responsible disclosure program at security@aisyte.ai. We take security reports very seriously and respond within 24 hours.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================
+  FOOTER
+============================= -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">AISyte</a>
+        <p>The AI-powered website builder that turns your vision into a live website in seconds. No code. No designers. Just results.</p>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="Twitter">𝕏</a>
+          <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+          <a href="#" class="social-link" aria-label="GitHub">⌥</a>
+          <a href="#" class="social-link" aria-label="YouTube">▶</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Product</h5>
+        <ul>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#templates">Templates</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-newsletter">
+        <h5>Stay Updated</h5>
+        <p>Get AI trends &amp; AISyte updates in your inbox.</p>
+        <form class="newsletter-form" novalidate>
+          <input type="email" placeholder="your@email.com" aria-label="Email address" />
+          <button type="submit" class="btn btn-primary">→</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 AISyte, Inc. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+
+<!-- Scripts -->
+<script src="js/darkmode.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+  /* ── Enhanced contact form validation ── */
+  const form = document.getElementById('contact-form');
+  if (form) {
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      let valid = true;
+
+      const rules = [
+        { id: 'c-name',    msg: 'Please enter your full name.',         min: 2 },
+        { id: 'c-email',   msg: 'Please enter a valid email address.',   email: true },
+        { id: 'c-topic',   msg: 'Please select a topic.',               required: true },
+        { id: 'c-subject', msg: 'Please enter a subject (min 4 chars).', min: 4 },
+        { id: 'c-message', msg: 'Message must be at least 15 characters.', min: 15 },
+      ];
+
+      rules.forEach(r => {
+        const el  = document.getElementById(r.id);
+        const err = document.getElementById(r.id + '-err');
+        if (!el) return;
+        const val = el.value.trim();
+        let msg   = '';
+
+        if (!val) {
+          msg = r.msg;
+        } else if (r.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+          msg = r.msg;
+        } else if (r.min && val.length < r.min) {
+          msg = r.msg;
+        }
+
+        if (err) err.textContent = msg;
+        if (msg) { valid = false; el.style.borderColor = 'var(--accent3)'; }
+        else el.style.borderColor = '';
+      });
+
+      /* Consent check */
+      const consent    = document.getElementById('c-consent');
+      const consentErr = document.getElementById('c-consent-err');
+      if (consent && !consent.checked) {
+        valid = false;
+        if (consentErr) consentErr.textContent = 'Please accept the privacy policy to proceed.';
+      } else if (consentErr) {
+        consentErr.textContent = '';
+      }
+
+      if (valid) {
+        showNotification('✅ Message sent! We\'ll respond within 2 hours.', 'success', 4000);
+        form.reset();
+        form.querySelectorAll('.form-err').forEach(el => el.textContent = '');
+        form.querySelectorAll('input, textarea, select').forEach(el => el.style.borderColor = '');
+      } else {
+        showNotification('Please fix the highlighted fields.', 'error');
+      }
+    });
+
+    /* Live clear */
+    form.querySelectorAll('input, textarea, select').forEach(el => {
+      el.addEventListener('input', () => {
+        const err = document.getElementById(el.id + '-err');
+        if (err) err.textContent = '';
+        el.style.borderColor = '';
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AISyte Pricing — Simple, transparent plans for every stage of growth." />
+  <title>Pricing — AISyte</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+  <style>
+    /* ── Page Hero ── */
+    .page-hero {
+      padding: calc(var(--navbar-height) + 80px) 0 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero-bg { position: absolute; inset: 0; z-index: 0; }
+    .page-hero-blob {
+      position: absolute; border-radius: 50%;
+      filter: blur(90px); opacity: 0.18;
+    }
+    .page-hero-blob-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, #6366f1, transparent 70%);
+      top: -100px; right: -60px;
+    }
+    .page-hero-blob-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, #f472b6, transparent 70%);
+      bottom: 0; left: -60px;
+    }
+    .page-hero-content { position: relative; z-index: 1; }
+
+    /* ── Plan cards (larger standalone version) ── */
+    .pricing-section { padding: 0 0 var(--section-padding); }
+
+    .plan-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.75rem;
+      align-items: start;
+      margin-bottom: 5rem;
+    }
+
+    .plan-card {
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      padding: 2.75rem 2.25rem;
+      position: relative;
+      transition: all var(--transition-med);
+    }
+
+    .plan-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--border-hover);
+      box-shadow: var(--shadow-md);
+    }
+
+    .plan-card.featured {
+      background: linear-gradient(160deg, rgba(99,102,241,.16), rgba(6,182,212,.08));
+      border-color: rgba(99,102,241,.45);
+      transform: scale(1.04);
+      box-shadow: var(--shadow-accent);
+    }
+
+    .plan-card.featured:hover {
+      transform: scale(1.04) translateY(-8px);
+      box-shadow: var(--shadow-md), var(--shadow-accent);
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: -14px; left: 50%;
+      transform: translateX(-50%);
+      padding: .3rem 1.125rem;
+      background: var(--gradient-main);
+      border-radius: var(--radius-full);
+      font-size: .75rem; font-weight: 700; color: #fff;
+      white-space: nowrap;
+      box-shadow: 0 4px 16px var(--accent-glow);
+    }
+
+    .plan-name {
+      font-size: .8125rem; font-weight: 700;
+      color: var(--accent-light);
+      text-transform: uppercase; letter-spacing: .08em;
+      margin-bottom: .875rem;
+    }
+
+    .plan-price {
+      display: flex; align-items: baseline; gap: .25rem;
+      margin-bottom: .5rem;
+    }
+
+    .plan-currency {
+      font-family: var(--font-display); font-size: 1.25rem;
+      font-weight: 700; color: var(--text-secondary);
+      align-self: flex-start; margin-top: .5rem;
+    }
+
+    .plan-amount {
+      font-family: var(--font-display); font-size: 4rem;
+      font-weight: 800; letter-spacing: -.05em;
+      color: var(--text-primary); line-height: 1;
+    }
+
+    .plan-period {
+      font-size: .875rem; color: var(--text-secondary);
+    }
+
+    .plan-original {
+      font-size: .875rem;
+      color: var(--text-muted);
+      text-decoration: line-through;
+      margin-left: .25rem;
+    }
+
+    .plan-desc {
+      font-size: .875rem; color: var(--text-secondary);
+      line-height: 1.65; margin-bottom: 1.75rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1.75rem;
+    }
+
+    .plan-features {
+      list-style: none;
+      display: flex; flex-direction: column;
+      gap: .8rem; margin-bottom: 2rem;
+    }
+
+    .plan-features li {
+      display: flex; align-items: flex-start;
+      gap: .625rem; font-size: .875rem;
+      color: var(--text-secondary);
+    }
+
+    .plan-features li .check { color: #22c55e; flex-shrink: 0; margin-top: .1rem; }
+    .plan-features li .cross { color: var(--text-muted); flex-shrink: 0; margin-top: .1rem; }
+    .plan-features li strong { color: var(--text-primary); font-weight: 600; }
+
+    /* ── Comparison Table ── */
+    .comparison-section { padding: 80px 0; background: var(--bg-secondary); border-top: 1px solid var(--border-color); }
+
+    .comp-table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+    }
+
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 680px;
+    }
+
+    .comp-table thead th {
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: .9375rem;
+      letter-spacing: -.01em;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .comp-table thead th:first-child {
+      text-align: left;
+      width: 38%;
+    }
+
+    .comp-table thead th.featured-col {
+      background: linear-gradient(135deg, rgba(99,102,241,.12), rgba(6,182,212,.06));
+      color: var(--accent-light);
+    }
+
+    .comp-table tbody tr {
+      border-bottom: 1px solid var(--border-color);
+      transition: background var(--transition-fast);
+    }
+
+    .comp-table tbody tr:last-child { border-bottom: none; }
+    .comp-table tbody tr:hover { background: rgba(255,255,255,.02); }
+
+    .comp-table tbody tr.section-row td {
+      padding: .625rem 1.25rem;
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--text-muted);
+      background: rgba(255,255,255,.02);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .comp-table td {
+      padding: 1rem 1.25rem;
+      font-size: .875rem;
+      color: var(--text-secondary);
+      text-align: center;
+    }
+
+    .comp-table td:first-child {
+      text-align: left;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .comp-table td.featured-col {
+      background: rgba(99,102,241,.04);
+    }
+
+    .comp-table .t-check { color: #22c55e; font-size: 1rem; }
+    .comp-table .t-cross { color: var(--text-muted); font-size: 1rem; }
+    .comp-table .t-val   { color: var(--text-primary); font-weight: 600; }
+
+    /* ── Enterprise Banner ── */
+    .enterprise-banner {
+      margin-top: 4rem;
+      padding: 3rem;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, rgba(99,102,241,.12), rgba(6,182,212,.06));
+      border: 1px solid rgba(99,102,241,.3);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .enterprise-banner h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem; font-weight: 800;
+      letter-spacing: -.03em; margin-bottom: .5rem;
+    }
+
+    .enterprise-banner p {
+      color: var(--text-secondary); font-size: .9rem;
+      max-width: 480px; line-height: 1.65;
+    }
+
+    .enterprise-perks {
+      display: flex; flex-wrap: wrap; gap: .5rem;
+      margin-top: 1rem;
+    }
+
+    .enterprise-perk {
+      padding: .3rem .875rem;
+      background: rgba(99,102,241,.1);
+      border: 1px solid rgba(99,102,241,.2);
+      border-radius: var(--radius-full);
+      font-size: .75rem; font-weight: 600;
+      color: var(--accent-light);
+    }
+
+    /* ── Logos / Trusted ── */
+    .trusted-section {
+      padding: 64px 0;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+    }
+
+    .trusted-label {
+      font-size: .8125rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .1em;
+      color: var(--text-muted); margin-bottom: 1.75rem;
+    }
+
+    .logo-strip {
+      display: flex; align-items: center;
+      justify-content: center; flex-wrap: wrap; gap: 2.5rem;
+    }
+
+    .logo-item {
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 800;
+      color: var(--text-muted);
+      letter-spacing: -.02em;
+      opacity: .55;
+      transition: opacity var(--transition-fast);
+    }
+
+    .logo-item:hover { opacity: 1; color: var(--text-primary); }
+
+    /* ── Guarantee ── */
+    .guarantee-strip {
+      padding: 64px 0;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .guarantee-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem; text-align: center;
+    }
+
+    .guarantee-item h4 {
+      font-family: var(--font-display);
+      font-size: 1.0625rem; font-weight: 800;
+      margin: .625rem 0 .375rem;
+      letter-spacing: -.01em;
+    }
+
+    .guarantee-item p {
+      font-size: .85rem; color: var(--text-secondary); line-height: 1.6;
+    }
+
+    .g-icon {
+      font-size: 2rem; display: block; margin-bottom: .25rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .plan-grid { grid-template-columns: 1fr; max-width: 440px; margin-left: auto; margin-right: auto; }
+      .plan-card.featured { transform: none; }
+      .plan-card.featured:hover { transform: translateY(-8px); }
+      .guarantee-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .enterprise-banner { flex-direction: column; padding: 2rem; }
+      .guarantee-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 400px) {
+      .guarantee-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+<div id="loader" aria-hidden="true">
+  <div class="loader-logo">AISyte</div>
+  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+</div>
+<div id="cursor-dot" aria-hidden="true"></div>
+<div id="cursor-ring" aria-hidden="true"></div>
+<div id="notification" role="status" aria-live="polite">
+  <div class="notif-icon">✓</div><span></span>
+</div>
+
+<!-- ============================
+  NAVBAR
+============================= -->
+<nav id="navbar" role="navigation" aria-label="Main navigation">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">AISyte</a>
+    <ul class="nav-links">
+      <li><a href="index.html#features">Features</a></li>
+      <li><a href="index.html#ai-demo">Demo</a></li>
+      <li><a href="index.html#templates">Templates</a></li>
+      <li><a href="pricing.html" class="active">Pricing</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button id="theme-toggle" aria-label="Toggle theme">☀️</button>
+      <a href="dashboard.html" class="btn btn-ghost">Sign in</a>
+      <a href="#plan-grid" class="btn btn-primary">Get Started</a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div id="mobile-nav" class="mobile-nav" aria-hidden="true">
+  <ul>
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="index.html#ai-demo">Demo</a></li>
+    <li><a href="index.html#templates">Templates</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="mobile-nav-actions">
+    <a href="dashboard.html" class="btn btn-ghost" style="width:100%;justify-content:center;">Sign in</a>
+    <a href="#plan-grid" class="btn btn-primary" style="width:100%;justify-content:center;">Get Started Free</a>
+    <button id="theme-toggle-mobile" style="background:var(--bg-card);border:1px solid var(--border-color);color:var(--text-secondary);padding:.625rem;border-radius:var(--radius-md);cursor:pointer;font-size:1rem;display:flex;align-items:center;gap:.5rem;width:100%;justify-content:center;font-family:var(--font-body);">🌙 Toggle Theme</button>
+  </div>
+</div>
+
+<!-- ============================
+  PAGE HERO
+============================= -->
+<div class="page-hero">
+  <div class="page-hero-bg">
+    <div class="page-hero-blob page-hero-blob-1"></div>
+    <div class="page-hero-blob page-hero-blob-2"></div>
+  </div>
+  <div class="page-hero-content container">
+    <div class="section-badge reveal reveal-up" style="margin:0 auto 1.25rem;">✦ Pricing</div>
+    <h1 class="section-title reveal reveal-up delay-1" style="font-size:clamp(2.25rem,5vw,3.5rem);margin-bottom:1rem;">
+      Simple, <span>Transparent</span> Pricing
+    </h1>
+    <p class="section-sub reveal reveal-up delay-2" style="margin:0 auto 2rem;">
+      No hidden fees. No surprise charges. Cancel anytime. Start free and scale when you're ready.
+    </p>
+
+    <!-- Toggle -->
+    <div class="pricing-toggle-wrap reveal reveal-up delay-3">
+      <span id="monthly-label" class="active-label">Monthly</span>
+      <div id="pricing-toggle" class="toggle-switch" role="switch" aria-checked="false" tabindex="0">
+        <div class="toggle-knob"></div>
+      </div>
+      <span id="yearly-label">Yearly</span>
+      <span class="save-badge">Save up to 35%</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================
+  PLAN CARDS
+============================= -->
+<section class="pricing-section">
+  <div class="container">
+    <div class="plan-grid" id="plan-grid">
+
+      <!-- Starter -->
+      <div class="plan-card reveal reveal-up delay-1">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price">
+          <span class="plan-currency">$</span>
+          <span class="plan-amount" data-price-idx="0">0</span>
+          <span class="plan-period">/mo</span>
+        </div>
+        <p class="plan-desc">Perfect for individuals testing the power of AI website building at zero cost.</p>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> <strong>3</strong> AI-generated websites</li>
+          <li><span class="check">✓</span> <strong>20</strong> AI content generations/month</li>
+          <li><span class="check">✓</span> AISyte subdomain (yoursite.aisyte.app)</li>
+          <li><span class="check">✓</span> <strong>50+</strong> basic templates</li>
+          <li><span class="check">✓</span> SSL certificate &amp; hosting</li>
+          <li><span class="check">✓</span> Drag &amp; drop page editor</li>
+          <li><span class="check">✓</span> Mobile-responsive output</li>
+          <li><span class="cross">✕</span> Custom domain</li>
+          <li><span class="cross">✕</span> Analytics dashboard</li>
+          <li><span class="cross">✕</span> SEO optimization tools</li>
+          <li><span class="cross">✕</span> Remove AISyte branding</li>
+          <li><span class="cross">✕</span> Priority support</li>
+        </ul>
+        <a href="dashboard.html" class="btn btn-ghost btn-lg" style="width:100%;justify-content:center;">Start for Free</a>
+        <p style="text-align:center;font-size:.75rem;color:var(--text-muted);margin-top:.75rem;">No credit card required</p>
+      </div>
+
+      <!-- Pro (featured) -->
+      <div class="plan-card featured reveal reveal-up delay-2">
+        <div class="popular-badge">⚡ Most Popular</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">
+          <span class="plan-currency">$</span>
+          <span class="plan-amount" data-price-idx="1">29</span>
+          <span class="plan-period">/mo</span>
+          <span class="plan-original" id="pro-original" style="display:none;">$29</span>
+        </div>
+        <p class="plan-desc">For founders and creators who are serious about building a professional online presence.</p>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> <strong>Unlimited</strong> AI-generated websites</li>
+          <li><span class="check">✓</span> <strong>Unlimited</strong> AI content generations</li>
+          <li><span class="check">✓</span> <strong>1 custom domain</strong> included free</li>
+          <li><span class="check">✓</span> <strong>200+</strong> premium templates</li>
+          <li><span class="check">✓</span> Full analytics dashboard</li>
+          <li><span class="check">✓</span> Complete SEO toolkit</li>
+          <li><span class="check">✓</span> Performance optimization</li>
+          <li><span class="check">✓</span> A/B testing</li>
+          <li><span class="check">✓</span> Remove AISyte branding</li>
+          <li><span class="check">✓</span> Priority email support</li>
+          <li><span class="check">✓</span> Form &amp; lead collection</li>
+          <li><span class="check">✓</span> eCommerce (up to 50 products)</li>
+        </ul>
+        <a href="dashboard.html" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">Start 14-Day Free Trial →</a>
+        <p style="text-align:center;font-size:.75rem;color:var(--text-muted);margin-top:.75rem;">No credit card required · Cancel anytime</p>
+      </div>
+
+      <!-- Business -->
+      <div class="plan-card reveal reveal-up delay-3">
+        <div class="plan-name">Business</div>
+        <div class="plan-price">
+          <span class="plan-currency">$</span>
+          <span class="plan-amount" data-price-idx="2">79</span>
+          <span class="plan-period">/mo</span>
+          <span class="plan-original" id="biz-original" style="display:none;">$79</span>
+        </div>
+        <p class="plan-desc">For agencies, studios, and teams managing multiple clients and needing advanced tools.</p>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> Everything in Pro</li>
+          <li><span class="check">✓</span> <strong>10</strong> team member seats</li>
+          <li><span class="check">✓</span> <strong>5 custom domains</strong> included</li>
+          <li><span class="check">✓</span> White-label &amp; client portal</li>
+          <li><span class="check">✓</span> Full REST API access</li>
+          <li><span class="check">✓</span> Advanced analytics &amp; exports</li>
+          <li><span class="check">✓</span> Unlimited eCommerce products</li>
+          <li><span class="check">✓</span> Dedicated account manager</li>
+          <li><span class="check">✓</span> 24/7 phone &amp; chat support</li>
+          <li><span class="check">✓</span> Custom AI model fine-tuning</li>
+          <li><span class="check">✓</span> SLA uptime guarantee (99.99%)</li>
+          <li><span class="check">✓</span> SAML/SSO &amp; audit logs</li>
+        </ul>
+        <a href="contact.html" class="btn btn-outline btn-lg" style="width:100%;justify-content:center;">Contact Sales</a>
+        <p style="text-align:center;font-size:.75rem;color:var(--text-muted);margin-top:.75rem;">Custom invoicing available</p>
+      </div>
+    </div>
+
+    <!-- Enterprise Banner -->
+    <div class="enterprise-banner reveal reveal-up">
+      <div>
+        <h3>Need something bigger? 🏢</h3>
+        <p>AISyte Enterprise is built for large organizations needing custom AI models, dedicated infrastructure, advanced compliance, and volume pricing starting at 25+ seats.</p>
+        <div class="enterprise-perks">
+          <span class="enterprise-perk">Custom AI Training</span>
+          <span class="enterprise-perk">Dedicated Servers</span>
+          <span class="enterprise-perk">SOC 2 Type II</span>
+          <span class="enterprise-perk">GDPR / HIPAA</span>
+          <span class="enterprise-perk">Volume Discounts</span>
+          <span class="enterprise-perk">Custom SLA</span>
+        </div>
+      </div>
+      <a href="contact.html" class="btn btn-primary btn-xl" style="flex-shrink:0;">Talk to Sales →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================
+  GUARANTEE STRIP
+============================= -->
+<section class="guarantee-strip">
+  <div class="container">
+    <div class="guarantee-grid">
+      <div class="guarantee-item reveal reveal-up delay-1">
+        <span class="g-icon">🛡️</span>
+        <h4>30-Day Money Back</h4>
+        <p>Not satisfied? Get a full refund within 30 days — no questions, no hassle, no hard feelings.</p>
+      </div>
+      <div class="guarantee-item reveal reveal-up delay-2">
+        <span class="g-icon">🔒</span>
+        <h4>Bank-Grade Security</h4>
+        <p>All data encrypted at rest and in transit. SOC 2 certified. We never sell your data to anyone.</p>
+      </div>
+      <div class="guarantee-item reveal reveal-up delay-3">
+        <span class="g-icon">⚡</span>
+        <h4>Cancel Anytime</h4>
+        <p>No contracts, no lock-in. Cancel with one click from your dashboard. Your sites stay live until period ends.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================
+  COMPARISON TABLE
+============================= -->
+<section class="comparison-section">
+  <div class="container">
+    <div class="section-header center" style="margin-bottom:2.5rem;">
+      <div class="section-badge reveal reveal-up">✦ Compare Plans</div>
+      <h2 class="section-title reveal reveal-up delay-1">Full Feature <span>Comparison</span></h2>
+    </div>
+
+    <div class="comp-table-wrap reveal reveal-up delay-1">
+      <table class="comp-table" aria-label="Feature comparison table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Starter</th>
+            <th class="featured-col">Pro ⚡</th>
+            <th>Business</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- AI Generation -->
+          <tr class="section-row"><td colspan="4">AI Generation</td></tr>
+          <tr>
+            <td>AI-generated websites</td>
+            <td class="t-val">3</td>
+            <td class="featured-col t-val">Unlimited</td>
+            <td class="t-val">Unlimited</td>
+          </tr>
+          <tr>
+            <td>AI content generations/mo</td>
+            <td class="t-val">20</td>
+            <td class="featured-col t-val">Unlimited</td>
+            <td class="t-val">Unlimited</td>
+          </tr>
+          <tr>
+            <td>AI image generation</td>
+            <td class="t-cross">✕</td>
+            <td class="featured-col t-val">500/mo</td>
+            <td class="t-val">Unlimited</td>
+          </tr>
+          <tr>
+            <td>Custom AI model fine-tuning</td>
+            <td class="t-cross">✕</td>
+            <td class="featured-col t-cross">✕</td>
+            <td class="t-check">✓</td>
+          </tr>
+
+          <!-- Publishing -->
+          <tr class="section-row"><td colspan="4">Publishing &amp; Hosting</td></tr>
+          <tr>
+            <td>AISyte subdomain</td>
+            <td class="t-check">✓</td>
+            <td class="featured-col t-check">✓</td>
+            <td class="t-check">✓</td>
+          </tr>
+          <tr>
+            <td>Custom domain</td>
+            <td class="t-cross">✕</td>
+            <td class="featured-col t-val">1 included</td>
+            <td class="t-val">5 included</td>
+          </tr>
+          <tr>
+            <td>SSL certificate</td>
+            <td class="t-check">✓</td>
+            <td class="featured-col t-check">✓</td>
+            <td class="t-check">✓</td>
+          </tr>
+          <tr>
+            <td>CDN &amp; global hosting</td>
+            <td class="t-check">✓</td>
+            <td class="featured-col t-check">✓</td>
+            <td class="t-check">✓</td>
+          </tr>
+          <tr>
+            <td>Uptime SLA</td>
+            <td class="t-val">99.9%</td>
+            <td class="featured-col t-val">99.9%</td>
+            <td class="t-val">99.99%</td>
+          </tr>
+
+          <!-- Design & Editor -->
+          <tr class="section-row"><td colspan="4">Design &amp; Editor</td></tr>
+          <tr>
+            <td>Templates available</td>
+            <td class="t-val">50+</td>
+            <td class="featured-col t-val">200+</td>
+            <td class="t-val">200+ + Custom</td>
+          </tr>
+          <tr>
+            <td>Drag &amp; drop editor</td>
+            <td class="t-check">✓</td>
+            <td class="featured-col t-check">✓</td>
+            <td class="t-check">✓</td>
+          </tr>
+          <tr>
+            <td>Remove AISyte branding</td>
+            <td class="t-cross">✕</td>
+            <td class="featured-col t-check">✓</td>
+            <td class="t-check">✓</td>
+          </tr>
+          <tr>
+            <td>White-label &amp; client portal</td>
+            <td class="t-cross">✕</td>
+            <td class="featured-col t-cross">✕</td>
+            <td class="t-check">✓</td>
+          </tr>
+
+          <!-- Analytics & SEO -->
+          <tr class="section-row"><td colspan="4">Analytics &amp; SEO</td></tr>
+          <tr>
+            <td>Analytics dashboard</td>
+            <td class="t-cross">✕</td>
+            <td class="featured-col t-check">✓</td>
+            <td class="t-check">✓</td>
+          </tr>
+          <tr>
+            <td>SEO optimization suite</td>
+            <td class="t-cross">✕</td>
+            <td class="featured-col t-check">✓</td>
+            <td class="t-check">✓</td>
+          </tr>
+          <tr>
+            <td>A/B testing</td>
+            <td class="t-cross">✕</td>
+            <td class="featured-col t-check">✓</td>
+            <td class="t-check">✓</td>
+          </tr>
+          <tr>
+            <td>Advanced analytics exports</td>
+            <td class="t-cross">✕</td>
+            <td class="featured-col t-cross">✕</td>
+            <td class="t-check">✓</td>
+          </tr>
+
+          <!-- Team & Support -->
+          <tr class="section-row"><td colspan="4">Team &amp; Support</td></tr>
+          <tr>
+            <td>Team seats</td>
+            <td class="t-val">1</td>
+            <td class="featured-col t-val">3</td>
+            <td class="t-val">10</td>
+          </tr>
+          <tr>
+            <td>API access</td>
+            <td class="t-cross">✕</td>
+            <td class="featured-col t-cross">✕</td>
+            <td class="t-check">✓</td>
+          </tr>
+          <tr>
+            <td>Email support</td>
+            <td class="t-val">Standard</td>
+            <td class="featured-col t-val">Priority</td>
+            <td class="t-val">Dedicated</td>
+          </tr>
+          <tr>
+            <td>24/7 phone &amp; chat</td>
+            <td class="t-cross">✕</td>
+            <td class="featured-col t-cross">✕</td>
+            <td class="t-check">✓</td>
+          </tr>
+          <tr>
+            <td>Dedicated account manager</td>
+            <td class="t-cross">✕</td>
+            <td class="featured-col t-cross">✕</td>
+            <td class="t-check">✓</td>
+          </tr>
+
+          <!-- CTA row -->
+          <tr>
+            <td></td>
+            <td><a href="dashboard.html" class="btn btn-ghost" style="width:100%;justify-content:center;font-size:.8125rem;">Start Free</a></td>
+            <td class="featured-col"><a href="dashboard.html" class="btn btn-primary" style="width:100%;justify-content:center;font-size:.8125rem;">Try Pro →</a></td>
+            <td><a href="contact.html" class="btn btn-outline" style="width:100%;justify-content:center;font-size:.8125rem;">Contact Sales</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================
+  TRUSTED BY
+============================= -->
+<section class="trusted-section">
+  <div class="container">
+    <p class="trusted-label reveal reveal-up">Trusted by teams at</p>
+    <div class="logo-strip reveal reveal-up delay-1">
+      <div class="logo-item">Vercel</div>
+      <div class="logo-item">Notion</div>
+      <div class="logo-item">Figma</div>
+      <div class="logo-item">Linear</div>
+      <div class="logo-item">Loom</div>
+      <div class="logo-item">Stripe</div>
+      <div class="logo-item">Framer</div>
+      <div class="logo-item">Retool</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================
+  FAQ
+============================= -->
+<section style="padding:var(--section-padding) 0;background:var(--bg-secondary);border-top:1px solid var(--border-color);">
+  <div class="container-sm">
+    <div class="section-header center" style="margin-bottom:2.5rem;">
+      <div class="section-badge reveal reveal-up">✦ FAQ</div>
+      <h2 class="section-title reveal reveal-up delay-1">Pricing <span>Questions</span></h2>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item reveal reveal-up delay-1">
+        <button class="faq-question">Is there really a free plan with no credit card?
+          <span class="faq-icon">+</span></button>
+        <div class="faq-answer"><p>Yes, 100%. The Starter plan is free forever — no credit card required, no time limit, no surprise charges. You get 3 AI websites and 20 AI content generations per month at zero cost.</p></div>
+      </div>
+      <div class="faq-item reveal reveal-up delay-2">
+        <button class="faq-question">What happens when I hit the Starter limits?
+          <span class="faq-icon">+</span></button>
+        <div class="faq-answer"><p>When you reach 3 websites or 20 content generations, you'll be prompted to upgrade to Pro. Your existing sites remain live and fully functional — you just can't create new ones until you upgrade or delete an old one.</p></div>
+      </div>
+      <div class="faq-item reveal reveal-up delay-3">
+        <button class="faq-question">Can I switch between monthly and yearly billing?
+          <span class="faq-icon">+</span></button>
+        <div class="faq-answer"><p>Absolutely. You can switch from monthly to yearly at any time from your billing settings. If you switch mid-cycle, we'll prorate the difference. Switching from yearly to monthly takes effect at your next renewal date.</p></div>
+      </div>
+      <div class="faq-item reveal reveal-up delay-4">
+        <button class="faq-question">Do you offer discounts for nonprofits or students?
+          <span class="faq-icon">+</span></button>
+        <div class="faq-answer"><p>Yes! We offer 50% off for verified nonprofits and 40% off for students with a valid .edu email. Contact us at hello@aisyte.ai with proof of eligibility and we'll apply the discount to your account.</p></div>
+      </div>
+      <div class="faq-item reveal reveal-up" style="transition-delay:.5s;">
+        <button class="faq-question">What payment methods do you accept?
+          <span class="faq-icon">+</span></button>
+        <div class="faq-answer"><p>We accept all major credit and debit cards (Visa, Mastercard, Amex, Discover), PayPal, and wire transfer for annual Business plans. All payments are processed securely through Stripe.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================
+  CTA BANNER
+============================= -->
+<section style="padding:80px 0;background:linear-gradient(135deg,rgba(99,102,241,.12),rgba(6,182,212,.06));border-top:1px solid var(--border-color);">
+  <div class="container" style="text-align:center;">
+    <div class="section-badge reveal reveal-up" style="margin:0 auto 1.5rem;">✦ Start Today</div>
+    <h2 class="section-title reveal reveal-up delay-1" style="margin-bottom:1.25rem;">
+      Your Website is<br /><span>30 Seconds Away</span>
+    </h2>
+    <p class="section-sub reveal reveal-up delay-2" style="margin:0 auto 2.5rem;">
+      Join 50,000+ builders who chose AISyte. Start free — no credit card needed.
+    </p>
+    <div class="reveal reveal-up delay-3" style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="dashboard.html" class="btn btn-primary btn-xl neon-pulse">🚀 Start Building Free</a>
+      <a href="contact.html" class="btn btn-ghost btn-xl">Talk to Sales</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================
+  FOOTER
+============================= -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">AISyte</a>
+        <p>The AI-powered website builder. Build stunning websites in seconds — no code, no designers needed.</p>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="Twitter">𝕏</a>
+          <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+          <a href="#" class="social-link" aria-label="GitHub">⌥</a>
+          <a href="#" class="social-link" aria-label="YouTube">▶</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Product</h5>
+        <ul>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#templates">Templates</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-newsletter">
+        <h5>Stay Updated</h5>
+        <p>Get AI trends &amp; AISyte updates in your inbox.</p>
+        <form class="newsletter-form" novalidate>
+          <input type="email" placeholder="your@email.com" aria-label="Email address" />
+          <button type="submit" class="btn btn-primary">→</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 AISyte, Inc. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+
+<script src="js/darkmode.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+  /* Extended pricing data for this page */
+  const priceData = [
+    { monthly: 0,  yearly: 0,  origYearly: '' },
+    { monthly: 29, yearly: 19, origYearly: '29' },
+    { monthly: 79, yearly: 59, origYearly: '79' },
+  ];
+
+  const toggle = document.getElementById('pricing-toggle');
+  let yearly   = false;
+
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      yearly = !yearly;
+      toggle.classList.toggle('on', yearly);
+      document.getElementById('monthly-label')?.classList.toggle('active-label', !yearly);
+      document.getElementById('yearly-label')?.classList.toggle('active-label', yearly);
+
+      document.querySelectorAll('[data-price-idx]').forEach(el => {
+        const idx  = parseInt(el.getAttribute('data-price-idx'));
+        const data = priceData[idx];
+        if (!data) return;
+        el.textContent = yearly ? data.yearly : data.monthly;
+      });
+
+      const proOrig = document.getElementById('pro-original');
+      const bizOrig = document.getElementById('biz-original');
+      if (proOrig) { proOrig.textContent = '$' + priceData[1].monthly; proOrig.style.display = yearly ? 'inline' : 'none'; }
+      if (bizOrig) { bizOrig.textContent = '$' + priceData[2].monthly; bizOrig.style.display = yearly ? 'inline' : 'none'; }
+    });
+  }
+</script>
+
+</body>
+</html>
